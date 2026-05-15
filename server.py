@@ -87,7 +87,7 @@ def send_message(message: str) -> str:
         
         try:
             result = subprocess.run(
-                cmd, capture_output=True, text=True, timeout=300,
+                cmd, capture_output=True, text=True, timeout=180,
                 env=ENV, cwd=PROJECT_DIR,
             )
             output = result.stdout + result.stderr
@@ -204,7 +204,7 @@ def main():
     print("=" * 55)
     sys.stdout.flush()
     
-    server = http.server.HTTPServer(('0.0.0.0', PORT), ChatHandler)
+    server = http.server.ThreadingHTTPServer(('0.0.0.0', PORT), ChatHandler)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
